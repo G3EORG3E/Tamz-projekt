@@ -20,7 +20,6 @@ import java.net.URL;
  */
 
 public class FetchJSONData extends AsyncTask<Void, Void, Void> {
-    String data = "";
     Sunsign sunsignObj;
     String sunsign;
 
@@ -35,11 +34,12 @@ public class FetchJSONData extends AsyncTask<Void, Void, Void> {
             HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpUrlConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String data = "";
             String line = "";
 
             while(line != null) {
                 line = bufferedReader.readLine();
-                data = data + line;
+                data += line;
             }
 
             JSONObject thisSign = new JSONObject(data);
