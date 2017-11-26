@@ -30,17 +30,19 @@ public class FetchJSONData extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         try {
-            URL url = new URL("http://sandipbgt.com/theastrologer/api/horoscope/"+sunsign+"/today/");
+            String data = "";
+            String line = "";
+            /*URL url = new URL("http://sandipbgt.com/theastrologer/api/horoscope/"+sunsign+"/today/");
             HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpUrlConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String data = "";
-            String line = "";
 
             while(line != null) {
                 line = bufferedReader.readLine();
                 data += line;
-            }
+            }*/
+
+            data="{ \"date\": \"2015-10-21\", \"sunsign\": \"Aquarius\", \"horoscope\": \"Today you're infused with the excitement of discovery. The world is full of possibility. It's a great time to research or develop a project, whether a personal or professional one. The important thing is to be creative: The more innovative your ideas, the better. A pioneering approach will not only lead to big things, it will impress your employer and other VIPs who are looking for something just a little bit different now.\", \"meta\": { \"intensity\": \"85%\", \"keywords\": \"loyal, carrier\", \"mood\": \"revolutionary\" } }";
 
             JSONObject thisSign = new JSONObject(data);
             JSONObject signMeta = (JSONObject) thisSign.get("meta");
@@ -53,10 +55,10 @@ public class FetchJSONData extends AsyncTask<Void, Void, Void> {
                                     thisSign.get("sunsign").toString());
 
 
-        } catch (MalformedURLException e) {
+       /* } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace();*/
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -66,6 +68,6 @@ public class FetchJSONData extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        HoroscopesList.data.setText(sunsignObj.mood);
+        HoroscopeDetail.data.setText(sunsignObj.horoscope);
     }
 }
