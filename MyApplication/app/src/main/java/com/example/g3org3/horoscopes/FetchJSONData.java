@@ -1,19 +1,9 @@
 package com.example.g3org3.horoscopes;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * Created by G3ORG3 on 25.11.2017.
@@ -22,8 +12,10 @@ import java.net.URL;
 public class FetchJSONData extends AsyncTask<Void, Void, Void> {
     Sunsign sunsignObj;
     String sunsign;
+    int order;
 
-    public FetchJSONData(String sunsign) {
+    public FetchJSONData(String sunsign,int order) {
+        this.order = order;
         this.sunsign = sunsign;
     }
 
@@ -68,6 +60,8 @@ public class FetchJSONData extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        HoroscopeDetail.data.setText(sunsignObj.horoscope);
+        if(order == 1) HoroscopeDetail.data.setText("1111" + sunsignObj.horoscope);
+        if(order == 2) HoroscopeDetail.data2.setText("222" + sunsignObj.horoscope);
+        if(order == 3) HoroscopeDetail.data3.setText("333" + sunsignObj.horoscope);
     }
 }

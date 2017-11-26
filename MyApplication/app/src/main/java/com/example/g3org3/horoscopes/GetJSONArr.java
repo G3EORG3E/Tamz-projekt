@@ -47,13 +47,13 @@ public class GetJSONArr extends AsyncTask<Void, Void, Void> {
                 data += line;
             }*/
 
-            data= "[ \"taurus\", \"aries\", \"gemini\" ]";
+            data= "[\"Aries\", \"Taurus\", \"Gemini\", \"Cancer\", \"Leo\", \"Virgo\",\"Libra\",\"Scorpio\",\"Sagittarius\",\"Capricorn\",\"Aquarius\",\"Pisces\"]";
 
             JSONArray jsonSigns = new JSONArray(data);
 
             listSigns = new ArrayList<String>();
             for (int i=0; i<jsonSigns.length(); i++) {
-                listSigns.add( jsonSigns.getString(i) );
+                listSigns.add( jsonSigns.getString(i).toUpperCase() );
             }
 
 
