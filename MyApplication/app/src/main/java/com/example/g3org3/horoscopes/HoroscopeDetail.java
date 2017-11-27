@@ -1,5 +1,6 @@
 package com.example.g3org3.horoscopes;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -23,11 +24,11 @@ import android.widget.TextView;
 
 public class HoroscopeDetail extends AppCompatActivity {
 
-    public static TextView data;
     static Intent gettedIntent;
     static Sunsign sunsignToday;
     static Sunsign sunsignYesterday;
     static Sunsign sunsignTomorrow;
+    Context context = HoroscopeDetail.this;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -68,8 +69,17 @@ public class HoroscopeDetail extends AppCompatActivity {
             public void onClick(View view) {
                 FavouritesDbHandler db = new FavouritesDbHandler(HoroscopeDetail.this);
 
-                //db.resetHorosopeTable();
-                db.addHoroscope(sunsignToday);
+                db.resetHorosopeTable();
+
+                if (mViewPager.getCurrentItem() == 0) {
+                    db.addHoroscope(sunsignYesterday);
+                }
+                else if (mViewPager.getCurrentItem() == 1) {
+                    db.addHoroscope(sunsignToday);
+                }
+                else {
+                    db.addHoroscope(sunsignTomorrow);
+                }
 
                 Snackbar.make(view, "Uloženo do oblíbených", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
@@ -131,16 +141,28 @@ public class HoroscopeDetail extends AppCompatActivity {
             ImageView im = (ImageView)  rootView.findViewById(R.id.imageViewSignDetail);
             im.setImageResource(getContext().getResources().getIdentifier(sunsignToday.sunsign.toLowerCase(), "drawable", getContext().getPackageName()));
 
-            data = (TextView) rootView.findViewById(R.id.section_label_horoscope);
+            TextView data = (TextView) rootView.findViewById(R.id.section_label_horoscope);
+            TextView mood = (TextView) rootView.findViewById(R.id.textViewMood);
+            TextView intenstiy = (TextView) rootView.findViewById(R.id.textViewIntensity);
+            TextView keywords = (TextView) rootView.findViewById(R.id.textViewKeywords);
 
             if(getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                 data.setText(sunsignYesterday.horoscope);
+                mood.setText(sunsignYesterday.mood);
+                intenstiy.setText(sunsignYesterday.intensity);
+                keywords.setText("Keywords: " + sunsignYesterday.keywords);
             }
             else if(getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
                 data.setText(sunsignToday.horoscope);
+                mood.setText(sunsignToday.mood);
+                intenstiy.setText(sunsignToday.intensity);
+                keywords.setText("Keywords: " + sunsignToday.keywords);
             }
             else {
                 data.setText(sunsignTomorrow.horoscope);
+                mood.setText(sunsignTomorrow.mood);
+                intenstiy.setText(sunsignTomorrow.intensity);
+                keywords.setText("Keywords: " + sunsignTomorrow.keywords);
             }
 
             return rootView;

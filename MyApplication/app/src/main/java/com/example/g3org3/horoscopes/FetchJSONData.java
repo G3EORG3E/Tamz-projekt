@@ -47,6 +47,7 @@ public class FetchJSONData extends AsyncTask<Void, Void, Void> {
         super.onPostExecute(aVoid);
 
         Intent intent = new Intent(context, HoroscopeDetail.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("sunsignToday", sunsignToday);
         intent.putExtra("sunsignYesterday", sunsignYesterday);
         intent.putExtra("sunsignTomorrow", sunsignTomorrow);
