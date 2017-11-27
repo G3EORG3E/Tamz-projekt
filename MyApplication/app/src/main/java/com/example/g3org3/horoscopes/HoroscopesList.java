@@ -32,12 +32,12 @@ public class HoroscopesList extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String thisentry = (String)parent.getItemAtPosition(position);
-                Intent intent = new Intent(view.getContext(), HoroscopeDetail.class);
-                intent.putExtra("sign", thisentry.toLowerCase());
-                startActivity(intent);
 
-                Toast.makeText(HoroscopesList.this.getApplicationContext(), thisentry, Toast.LENGTH_LONG).show();
+            String thisentry = (String)parent.getItemAtPosition(position);
+
+            (new FetchJSONData(thisentry.toLowerCase(), context)).execute();
+
+            Toast.makeText(HoroscopesList.this.getApplicationContext(), thisentry, Toast.LENGTH_LONG).show();
             }
         });
 

@@ -1,30 +1,66 @@
 package com.example.g3org3.horoscopes;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by G3ORG3 on 25.11.2017.
  */
 
 public class FetchJSONData extends AsyncTask<Void, Void, Void> {
-    Sunsign sunsignObj;
-    String sunsign;
-    int order;
 
-    public FetchJSONData(String sunsign,int order) {
-        this.order = order;
+    String sunsign;
+    Sunsign sunsignToday;
+    Sunsign sunsignYesterday;
+    Sunsign sunsignTomorrow;
+    Context context;
+
+    public FetchJSONData(String sunsign, Context context) {
         this.sunsign = sunsign;
+        this.context = context;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
+
+        sunsignToday = this.fetchData(sunsign,"today");
+        sunsignYesterday = this.fetchData(sunsign,"yesterday");
+        sunsignTomorrow = this.fetchData(sunsign,"tomorrow");
+
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+
+        Intent intent = new Intent(context, HoroscopeDetail.class);
+        intent.putExtra("sunsignToday", sunsignToday);
+        intent.putExtra("sunsignYesterday", sunsignYesterday);
+        intent.putExtra("sunsignTomorrow", sunsignTomorrow);
+        context.startActivity(intent);
+
+    }
+
+    protected static Sunsign fetchData(String thisSunsign, String day) {
+        Sunsign sunsignObj = new Sunsign();
+
         try {
             String data = "";
             String line = "";
-            /*URL url = new URL("http://sandipbgt.com/theastrologer/api/horoscope/"+sunsign+"/today/");
+            /*URL url = new URL("http://sandipbgt.com/theastrologer/api/horoscope/"+thisSunsign+"/"+day+"/");
             HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpUrlConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -39,29 +75,24 @@ public class FetchJSONData extends AsyncTask<Void, Void, Void> {
             JSONObject thisSign = new JSONObject(data);
             JSONObject signMeta = (JSONObject) thisSign.get("meta");
 
-            sunsignObj = new Sunsign(thisSign.get("horoscope").toString(),
-                                    signMeta.get("intensity").toString(),
-                                    signMeta.get("mood").toString(),
-                                    signMeta.get("keywords").toString(),
-                                    thisSign.get("date").toString(),
-                                    thisSign.get("sunsign").toString());
+            sunsignObj.setAttrs(thisSign.get("horoscope").toString() + day,
+                    signMeta.get("intensity").toString(),
+                    signMeta.get("mood").toString(),
+                    signMeta.get("keywords").toString(),
+                    thisSign.get("date").toString(),
+                    thisSign.get("sunsign").toString());
 
 
-       /* } catch (MalformedURLException e) {
+        /*} catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();*/
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+
+        return sunsignObj;
     }
 
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        if(order == 1) HoroscopeDetail.data.setText("1111" + sunsignObj.horoscope);
-        if(order == 2) HoroscopeDetail.data2.setText("222" + sunsignObj.horoscope);
-        if(order == 3) HoroscopeDetail.data3.setText("333" + sunsignObj.horoscope);
-    }
+
 }

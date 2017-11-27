@@ -24,9 +24,10 @@ import android.widget.TextView;
 public class HoroscopeDetail extends AppCompatActivity {
 
     public static TextView data;
-    public static TextView data2;
-    public static TextView data3;
     static Intent gettedIntent;
+    static Sunsign sunsignToday;
+    static Sunsign sunsignYesterday;
+    static Sunsign sunsignTomorrow;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -39,6 +40,14 @@ public class HoroscopeDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horoscope_detail);
+
+        gettedIntent = this.getIntent();
+
+        sunsignToday = (Sunsign)gettedIntent.getSerializableExtra("sunsignToday");
+        sunsignYesterday = (Sunsign)gettedIntent.getSerializableExtra("sunsignYesterday");
+        sunsignTomorrow = (Sunsign)gettedIntent.getSerializableExtra("sunsignTomorrow");
+
+        this.setTitle(sunsignToday.sunsign);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,16 +66,14 @@ public class HoroscopeDetail extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                FavouritesDbHandler db = new FavouritesDbHandler(HoroscopeDetail.this);
+
+                //db.resetHorosopeTable();
+                db.addHoroscope(sunsignToday);
+
+                Snackbar.make(view, "Uloženo do oblíbených", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
-
-        gettedIntent = this.getIntent();
-        this.setTitle(gettedIntent.getExtras().getString("sign").toUpperCase());
-
-
-
     }
 
 
@@ -121,26 +128,19 @@ public class HoroscopeDetail extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_horoscope_detail, container, false);
 
-
-            String gettedSign = gettedIntent.getExtras().getString("sign");
             ImageView im = (ImageView)  rootView.findViewById(R.id.imageViewSignDetail);
+            im.setImageResource(getContext().getResources().getIdentifier(sunsignToday.sunsign.toLowerCase(), "drawable", getContext().getPackageName()));
 
-            im.setImageResource(getContext().getResources().getIdentifier(gettedSign.toLowerCase(), "drawable", getContext().getPackageName()));
+            data = (TextView) rootView.findViewById(R.id.section_label_horoscope);
 
             if(getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-                data = (TextView) rootView.findViewById(R.id.section_label_horoscope);
-                data.setText("eept");
-                (new FetchJSONData(gettedSign,1)).execute();
+                data.setText(sunsignYesterday.horoscope);
             }
             else if(getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
-                data2 = (TextView) rootView.findViewById(R.id.section_label_horoscope);
-                data2.setText("eept2");
-                (new FetchJSONData(gettedSign,2)).execute();
+                data.setText(sunsignToday.horoscope);
             }
             else {
-                data3 = (TextView) rootView.findViewById(R.id.section_label_horoscope);
-                data3.setText("eept3");
-                (new FetchJSONData(gettedSign,3)).execute();
+                data.setText(sunsignTomorrow.horoscope);
             }
 
             return rootView;
