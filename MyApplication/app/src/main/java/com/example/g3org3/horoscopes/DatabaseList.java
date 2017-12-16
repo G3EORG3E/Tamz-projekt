@@ -1,5 +1,6 @@
 package com.example.g3org3.horoscopes;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,8 +31,11 @@ public class DatabaseList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Sunsign thisentry = (Sunsign) parent.getItemAtPosition(position);
-                Toast.makeText(DatabaseList.this, thisentry.sunsign, Toast.LENGTH_LONG).show();
+                Sunsign horoscope = (Sunsign) parent.getItemAtPosition(position);
+
+                Intent detail = new Intent(DatabaseList.this,DatabaseDetail.class);
+                detail.putExtra("horosocpe", horoscope);
+                startActivity(detail);
 
             }
         });

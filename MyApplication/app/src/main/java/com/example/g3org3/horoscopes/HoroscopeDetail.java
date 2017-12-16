@@ -84,7 +84,6 @@ public class HoroscopeDetail extends AppCompatActivity {
                     public void onClick(View v) {
                         FavouritesDbHandler db = new FavouritesDbHandler(HoroscopeDetail.this);
 
-                        db.resetHorosopeTable();
 
                         if (mViewPager.getCurrentItem() == 0) {
                             sunsignYesterday.note = mNote.getText().toString();
@@ -161,7 +160,7 @@ public class HoroscopeDetail extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_horoscope_detail, container, false);
 
-            ImageView im = (ImageView)  rootView.findViewById(R.id.imageViewSignDetail);
+            ImageView im = (ImageView)  rootView.findViewById(R.id.imageViewSignDetailDB);
             im.setImageResource(getContext().getResources().getIdentifier(sunsignToday.sunsign.toLowerCase(), "drawable", getContext().getPackageName()));
 
             TextView data = (TextView) rootView.findViewById(R.id.section_label_horoscope);
