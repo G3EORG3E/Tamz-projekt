@@ -51,6 +51,7 @@ public class FetchJSONHoroscope extends AsyncTask<Void, Void, Void> {
         intent.putExtra("sunsignToday", sunsignToday);
         intent.putExtra("sunsignYesterday", sunsignYesterday);
         intent.putExtra("sunsignTomorrow", sunsignTomorrow);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
 
     }

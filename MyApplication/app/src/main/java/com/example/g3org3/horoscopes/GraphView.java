@@ -46,12 +46,14 @@ public class GraphView extends View {
 
             int top = fontSize + barHeight + 60;
             int newI = i+1;
-            String graphText =  allHoroscopes.get(i).sunsign.toUpperCase() + " (" + allHoroscopes.get(i).intensity+")";
 
-            canvas.drawText(graphText, screenOffset, newI*top - 10, mTextPaint);
+            mTextPaint.setTextAlign(Paint.Align.LEFT);
+            canvas.drawText(allHoroscopes.get(i).sunsign.toUpperCase(), screenOffset, newI*top - 10, mTextPaint);
+            mTextPaint.setTextAlign(Paint.Align.RIGHT);
+            canvas.drawText(allHoroscopes.get(i).intensity, maxWidth, newI*top - 10, mTextPaint);
+
             canvas.drawRect(screenOffset, newI*top, maxWidth, (newI*top)+barHeight, rectPaintBack );
             canvas.drawRect(screenOffset, newI*top, precentageWidht, (newI*top)+barHeight, rectPaint );
         }
-
     }
 }

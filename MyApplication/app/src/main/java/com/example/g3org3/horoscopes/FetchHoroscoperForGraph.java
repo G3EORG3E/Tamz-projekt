@@ -51,6 +51,7 @@ public class FetchHoroscoperForGraph extends AsyncTask<Void, Void, Void> {
         Intent intent = new Intent(context, HoroscopeGraph.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("allHoroscopes", allHoroscopes);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
 
     }

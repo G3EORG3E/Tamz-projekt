@@ -56,6 +56,7 @@ public class HoroscopesList extends AppCompatActivity {
             if (velocityX < -5000 ) { // potáhnutí doleva
 
                 Intent fav = new Intent(context,DatabaseList.class);
+                fav.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(fav);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.stable);
             }

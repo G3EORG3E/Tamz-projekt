@@ -45,7 +45,7 @@ public class DatabaseListAdapter extends ArrayAdapter<Sunsign> {
             }
             else
             {
-            item = (EntryHolder)row.getTag();
+                item = (EntryHolder)row.getTag();
             }
 
             Sunsign entry = data.get(position);
