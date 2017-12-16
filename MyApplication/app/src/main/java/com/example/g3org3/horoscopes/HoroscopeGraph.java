@@ -12,13 +12,14 @@ public class HoroscopeGraph extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_horoscope_graph);
+
+        this.setTitle("Horoscopes - Intensity Compare");
         Intent gettedIntent = getIntent();
         ArrayList<Sunsign> allHoroscopes = (ArrayList<Sunsign>) gettedIntent.getSerializableExtra("allHoroscopes");
 
-        int intenstiyNumb = Integer.parseInt(allHoroscopes.get(0).getIntensity().replace("%",""));
+        setContentView(new GraphView(this,allHoroscopes));
 
-        Toast.makeText(HoroscopeGraph.this, ""+ intenstiyNumb, Toast.LENGTH_LONG).show();
+        Toast.makeText(HoroscopeGraph.this, "sddd", Toast.LENGTH_LONG).show();
 
     }
 }
