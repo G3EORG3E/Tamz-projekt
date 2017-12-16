@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -19,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -67,21 +70,41 @@ public class HoroscopeDetail extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FavouritesDbHandler db = new FavouritesDbHandler(HoroscopeDetail.this);
+                final View thisView= view;
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(HoroscopeDetail.this);
+                View mView = getLayoutInflater().inflate(R.layout.dialog_addnote, null);
 
-                db.resetHorosopeTable();
+                final EditText mNote = (EditText) mView.findViewById(R.id.dialog_note);
+                Button mAdd = (Button) mView.findViewById(R.id.dialog_button_add);
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
 
-                if (mViewPager.getCurrentItem() == 0) {
-                    db.addHoroscope(sunsignYesterday);
-                }
-                else if (mViewPager.getCurrentItem() == 1) {
-                    db.addHoroscope(sunsignToday);
-                }
-                else {
-                    db.addHoroscope(sunsignTomorrow);
-                }
+                mAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FavouritesDbHandler db = new FavouritesDbHandler(HoroscopeDetail.this);
 
-                Snackbar.make(view, "Uloženo do oblíbených", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                        db.resetHorosopeTable();
+
+                        if (mViewPager.getCurrentItem() == 0) {
+                            sunsignYesterday.note = mNote.getText().toString();
+                            db.addHoroscope(sunsignYesterday);
+                        }
+                        else if (mViewPager.getCurrentItem() == 1) {
+                            sunsignToday.note = mNote.getText().toString();
+                            db.addHoroscope(sunsignToday);
+                        }
+                        else {
+                            sunsignTomorrow.note = mNote.getText().toString();
+                            db.addHoroscope(sunsignTomorrow);
+                        }
+
+                        dialog.hide();
+                        Snackbar.make(thisView, "Uloženo do oblíbených", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    }
+                });
+
+                dialog.show();
             }
         });
     }
@@ -150,19 +173,19 @@ public class HoroscopeDetail extends AppCompatActivity {
                 data.setText(sunsignYesterday.horoscope);
                 mood.setText(sunsignYesterday.mood);
                 intenstiy.setText(sunsignYesterday.intensity);
-                keywords.setText("Keywords: " + sunsignYesterday.keywords);
+                keywords.setText(sunsignYesterday.keywords);
             }
             else if(getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
                 data.setText(sunsignToday.horoscope);
                 mood.setText(sunsignToday.mood);
                 intenstiy.setText(sunsignToday.intensity);
-                keywords.setText("Keywords: " + sunsignToday.keywords);
+                keywords.setText(sunsignToday.keywords);
             }
             else {
                 data.setText(sunsignTomorrow.horoscope);
                 mood.setText(sunsignTomorrow.mood);
                 intenstiy.setText(sunsignTomorrow.intensity);
-                keywords.setText("Keywords: " + sunsignTomorrow.keywords);
+                keywords.setText(sunsignTomorrow.keywords);
             }
 
             return rootView;

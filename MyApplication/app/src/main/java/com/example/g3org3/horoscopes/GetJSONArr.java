@@ -36,8 +36,8 @@ public class GetJSONArr extends AsyncTask<Void, Void, Void> {
         try {
             String data = "";
             String line = "";
-            /*
-            URL url = new URL("http://sandipbgt.com/theastrologer/api/horoscope/taurus/today/");
+
+            URL url = new URL("http://sandipbgt.com/theastrologer/api/sunsigns/");
             HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpUrlConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -45,9 +45,9 @@ public class GetJSONArr extends AsyncTask<Void, Void, Void> {
             while(line != null) {
                 line = bufferedReader.readLine();
                 data += line;
-            }*/
+            }
 
-            data= "[\"Aries\", \"Taurus\", \"Gemini\", \"Cancer\", \"Leo\", \"Virgo\",\"Libra\",\"Scorpio\",\"Sagittarius\",\"Capricorn\",\"Aquarius\",\"Pisces\"]";
+            //data= "[\"Aries\", \"Taurus\", \"Gemini\", \"Cancer\", \"Leo\", \"Virgo\",\"Libra\",\"Scorpio\",\"Sagittarius\",\"Capricorn\",\"Aquarius\",\"Pisces\"]";
 
             JSONArray jsonSigns = new JSONArray(data);
 
@@ -59,10 +59,10 @@ public class GetJSONArr extends AsyncTask<Void, Void, Void> {
 
 
 
-        /*} catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();*/
+            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
