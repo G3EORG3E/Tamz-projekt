@@ -14,30 +14,33 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by G3ORG3 on 25.11.2017.
+ * Created by G3ORG3 on 16.12.2017.
  */
 
-public class FetchJSONData extends AsyncTask<Void, Void, Void> {
-
-    String sunsign;
-    Sunsign sunsignToday;
-    Sunsign sunsignYesterday;
-    Sunsign sunsignTomorrow;
+public class FetchHoroscoperForGraph extends AsyncTask<Void, Void, Void> {
+    ArrayList<Sunsign> allHoroscopes;
     Context context;
+    String day;
 
-    public FetchJSONData(String sunsign, Context context) {
-        this.sunsign = sunsign;
+    public FetchHoroscoperForGraph(Context context, String day) {
         this.context = context;
+        this.day = day;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
+        String[] sunsugnsArr = { "aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces" };
+        allHoroscopes = new ArrayList<Sunsign>();
 
-        sunsignToday = this.fetchData(sunsign,"today");
-        sunsignYesterday = this.fetchData(sunsign,"yesterday");
-        sunsignTomorrow = this.fetchData(sunsign,"tomorrow");
+        for (String sunsign: sunsugnsArr) {
+            Sunsign gettedSunsign = fetchData(sunsign, day);
+            allHoroscopes.add(gettedSunsign);
+        }
+
 
         return null;
     }
@@ -45,12 +48,9 @@ public class FetchJSONData extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-
-        Intent intent = new Intent(context, HoroscopeDetail.class);
+        Intent intent = new Intent(context, HoroscopeGraph.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("sunsignToday", sunsignToday);
-        intent.putExtra("sunsignYesterday", sunsignYesterday);
-        intent.putExtra("sunsignTomorrow", sunsignTomorrow);
+        intent.putExtra("allHoroscopes", allHoroscopes);
         context.startActivity(intent);
 
     }
@@ -94,6 +94,4 @@ public class FetchJSONData extends AsyncTask<Void, Void, Void> {
 
         return sunsignObj;
     }
-
-
 }

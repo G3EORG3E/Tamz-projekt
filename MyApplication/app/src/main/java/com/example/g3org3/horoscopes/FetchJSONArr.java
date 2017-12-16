@@ -22,12 +22,12 @@ import java.util.List;
  * Created by G3ORG3 on 26.11.2017.
  */
 
-public class GetJSONArr extends AsyncTask<Void, Void, Void> {
+public class FetchJSONArr extends AsyncTask<Void, Void, Void> {
 
     List<String> listSigns;
     Context context;
 
-    public GetJSONArr(Context context) {
+    public FetchJSONArr(Context context) {
         this.context = context;
     }
 

@@ -1,6 +1,5 @@
 package com.example.g3org3.horoscopes;
 
-import android.app.ActivityOptions;
 import android.content.Context;
 
 import android.content.Intent;
@@ -27,7 +26,7 @@ public class HoroscopesList extends AppCompatActivity {
         mGesture = new GestureDetector(this, mOnGesture);
 
         lv = (ListView) findViewById(R.id.horoscopeList);
-        (new GetJSONArr(context)).execute();
+        (new FetchJSONArr(context)).execute();
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -35,7 +34,7 @@ public class HoroscopesList extends AppCompatActivity {
 
             String thisentry = (String)parent.getItemAtPosition(position);
 
-            (new FetchJSONData(thisentry.toLowerCase(), context)).execute();
+            (new FetchJSONHoroscope(thisentry.toLowerCase(), context)).execute();
 
             Toast.makeText(HoroscopesList.this.getApplicationContext(), thisentry, Toast.LENGTH_LONG).show();
             }

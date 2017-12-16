@@ -167,24 +167,46 @@ public class HoroscopeDetail extends AppCompatActivity {
             TextView mood = (TextView) rootView.findViewById(R.id.textViewMood);
             TextView intenstiy = (TextView) rootView.findViewById(R.id.textViewIntensity);
             TextView keywords = (TextView) rootView.findViewById(R.id.textViewKeywords);
+            Button showChart = (Button) rootView.findViewById(R.id.buttonShowChart);
 
             if(getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                 data.setText(sunsignYesterday.horoscope);
                 mood.setText(sunsignYesterday.mood);
                 intenstiy.setText(sunsignYesterday.intensity);
                 keywords.setText(sunsignYesterday.keywords);
+
+                showChart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        (new FetchHoroscoperForGraph(getContext(), "yesterday")).execute();
+                    }
+                });
             }
             else if(getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
                 data.setText(sunsignToday.horoscope);
                 mood.setText(sunsignToday.mood);
                 intenstiy.setText(sunsignToday.intensity);
                 keywords.setText(sunsignToday.keywords);
+
+                showChart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        (new FetchHoroscoperForGraph(getContext(), "today")).execute();
+                    }
+                });
             }
             else {
                 data.setText(sunsignTomorrow.horoscope);
                 mood.setText(sunsignTomorrow.mood);
                 intenstiy.setText(sunsignTomorrow.intensity);
                 keywords.setText(sunsignTomorrow.keywords);
+
+                showChart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        (new FetchHoroscoperForGraph(getContext(), "tomorrow")).execute();
+                    }
+                });
             }
 
             return rootView;

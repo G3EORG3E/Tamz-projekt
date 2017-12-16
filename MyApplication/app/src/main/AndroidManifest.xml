@@ -23,7 +23,8 @@
             android:label="@string/title_activity_horoscope_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".DatabaseList" />
-        <activity android:name=".DatabaseDetail"></activity>
+        <activity android:name=".DatabaseDetail" />
+        <activity android:name=".HoroscopeGraph"></activity>
     </application>
 
 </manifest>
