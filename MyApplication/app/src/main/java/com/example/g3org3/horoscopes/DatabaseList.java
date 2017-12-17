@@ -1,6 +1,7 @@
 package com.example.g3org3.horoscopes;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -118,7 +119,11 @@ public class DatabaseList extends AppCompatActivity implements SensorEventListen
                     canShow = false;
                     mLastShakeTime = curTime;
 
+                    final MediaPlayer mp = MediaPlayer.create(this, R.raw.caseclosed);
                     dialog.show();
+                    mp.start();
+
+
                 }
             }
         }
